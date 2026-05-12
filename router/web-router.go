@@ -15,16 +15,23 @@ import (
 
 // ThemeAssets holds the embedded frontend assets for both themes.
 type ThemeAssets struct {
-	DefaultBuildFS   embed.FS
+	DefaultBuildFS embed.FS
+	// ClassicBuildFS is optional; if zero value, classic theme is disabled.
+	ClassicBuildFS embed.FS
 	DefaultIndexPage []byte
-	ClassicBuildFS   embed.FS
-	ClassicIndexPage []byte
 }
 
 func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 	defaultFS := common.EmbedFolder(assets.DefaultBuildFS, "web/default/dist")
-	classicFS := common.EmbedFolder(assets.ClassicBuildFS, "web/classic/dist")
-	themeFS := common.NewThemeAwareFS(defaultFS, classicFS)
+
+	var themeFS static.ServeFileSystem
+	if (assets.ClassicBuildFS == embed.FS{}) {
+		// Classic theme disabled — use default FS only
+		themeFS = defaultFS
+	} else {
+		classicFS := common.EmbedFolder(assets.ClassicBuildFS, "web/classic/dist")
+		themeFS = common.NewThemeAwareFS(defaultFS, classicFS)
+	}
 
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
@@ -37,10 +44,6 @@ func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 			return
 		}
 		c.Header("Cache-Control", "no-cache")
-		if common.GetTheme() == "classic" {
-			c.Data(http.StatusOK, "text/html; charset=utf-8", assets.ClassicIndexPage)
-		} else {
-			c.Data(http.StatusOK, "text/html; charset=utf-8", assets.DefaultIndexPage)
-		}
+		c.Data(http.StatusOK, "text/html; charset=utf-8", assets.DefaultIndexPage)
 	})
 }
