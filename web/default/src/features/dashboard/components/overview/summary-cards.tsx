@@ -18,7 +18,6 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
 import { ArrowRight, CreditCard } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/stores/auth-store'
@@ -226,10 +225,6 @@ export function SummaryCards() {
                 : t('Balance is shown in quota units')}
             </p>
           </div>
-          <Button className='justify-between' render={<Link to='/wallet' />}>
-            <span>{t('Recharge')}</span>
-            <ArrowRight data-icon='inline-end' />
-          </Button>
         </div>
       </div>
     </div>

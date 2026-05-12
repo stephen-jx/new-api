@@ -75,11 +75,8 @@ const SETUP_GUIDE_CODE_PATTERN = [
 
 type DashboardActionPath =
   | '/keys'
-  | '/wallet'
-  | '/playground'
   | '/channels'
   | '/usage-logs'
-  | '/pricing'
 
 interface StartStep {
   title: string
@@ -474,32 +471,12 @@ export function OverviewDashboard() {
         icon: KeyRound,
         completed: Boolean(preferredKey),
       },
-      {
-        title: t('Add credits'),
-        description: t('Keep enough balance before production traffic'),
-        to: '/wallet',
-        icon: CreditCard,
-        completed: remainQuota > 0 || usedQuota > 0,
-      },
-      {
-        title: t('Send a request'),
-        description: t('Verify routing with Playground or your client'),
-        to: '/playground',
-        icon: TerminalSquare,
-        completed: requestCount > 0,
-      },
     ],
     [preferredKey, remainQuota, requestCount, t, usedQuota]
   )
 
   const quickActions = useMemo<QuickAction[]>(
     () => [
-      {
-        title: t('Playground'),
-        description: t('Test models and prompts from the browser'),
-        to: '/playground',
-        icon: Play,
-      },
       {
         title: t('Channels'),
         description: t('Configure upstream providers and routing.'),
@@ -512,12 +489,6 @@ export function OverviewDashboard() {
         description: t('Inspect requests, errors, and billing details'),
         to: '/usage-logs',
         icon: FileText,
-      },
-      {
-        title: t('Pricing'),
-        description: t('Review model rates before scaling traffic'),
-        to: '/pricing',
-        icon: BookOpen,
       },
     ],
     [t]
