@@ -2,9 +2,20 @@
 
 ![new-api](/web/default/public/logo.png)
 
-# New API
+# New API（企业内网精简版）
 
-🍥 **新一代大模型网关与AI资产管理系统**
+> ⚠️ **精简版说明**：基于 [Calcium-Ion/new-api](https://github.com/Calcium-Ion/new-api) 精简，移除了公开版功能，适合企业内网部署。
+>
+> **已移除功能：**
+> - 充值/钱包/订阅功能
+> - 兑换码系统
+> - Playground 聊天测试
+> - 价格表/Model Square
+> - 排行榜
+> - 用户协议/隐私政策页面
+> - 控制台日志/充值记录
+
+🍥 **新一代大模型网关与AI资产管理系统（企业内网版）**
 
 <p align="center">
   简体中文 |
